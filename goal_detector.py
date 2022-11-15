@@ -10,6 +10,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 ### FLAGS ###
+create_random_data_flag = False
 show_sample_data_flag = False
 show_results_flag = False
 model_save_flag = False
@@ -20,22 +21,19 @@ img_width = 180
 
 data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
 
-# dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
-# data_dir = tf.keras.utils.get_file('flower_photos', origin=dataset_url, untar=True)
-# data_dir = pathlib.Path(data_dir)
+if create_random_data_flag is True:
+    ## Creating random data
+    path = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data\Not football goal"
 
-### Creating random data
-# path = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data\Not football goal"
-
-# for i in range(200):
-#     url = "https://picsum.photos/200/200/?random"
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#         file_name = 'not_nicolas_{}.jpg'.format(i)
-#         file_path = path + "/" + file_name
-#         with open(file_path, 'wb') as f:
-#             print("saving: " + file_name)
-#             f.write(response.content)
+    for i in range(200):
+        url = "https://picsum.photos/200/200/?random"
+        response = requests.get(url)
+        if response.status_code == 200:
+            file_name = 'not_nicolas_{}.jpg'.format(i)
+            file_path = path + "/" + file_name
+            with open(file_path, 'wb') as f:
+                print("saving: " + file_name)
+                f.write(response.content)
 
 ### Dividing data into training and validation
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -55,7 +53,6 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
   batch_size=batch_size)
 
 class_names = ['Football goal', 'Not football goal']
-# class_names = train_ds.class_names
 
 ### Visualise some of the training data
 if show_sample_data_flag is True:
@@ -117,15 +114,6 @@ predictions = model.predict(image)
 print(predictions)
 class_index = np.argmax(predictions)
 print(class_index)
-
-# sess = keras.backend.get_session()
-# img = tf.image.decode_jpeg(img, channels=3)
-# img.set_shape([None, None, 3])
-# img = tf.image.resize_images(img, (32, 32))
-# img = img.eval(session=sess) # convert to numpy array
-# img = np.expand_dims(img, 0) # make 'batch' of 1
-# pred = model.predict(img)
-# pred = class_names["label_names"][np.argmax(pred)]
 
 if show_results_flag is True:
     epochs_range = range(epochs)
