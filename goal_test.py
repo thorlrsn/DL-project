@@ -11,7 +11,7 @@ from tensorflow.keras.models import Sequential, model_from_json
 # from tensorflow.keras.layers import Dense
 
 ### Load model from folders
-path_to_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Models\adam_20epoch_163264"
+path_to_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Models\adam_10epoch_163264_batch8"
 path_to_model = path_to_dir + '\model.json'
 path_to_weight = path_to_dir + '\model.h5'
 
@@ -29,10 +29,9 @@ loaded_model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 ### Test on single image
-image=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data\Football goal\images (90).jpeg")
+image=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\sample_image_goal_from_ts.png")
 image=cv2.resize(image, (180,180))
 image=np.expand_dims(image, axis=0) #input shape needs to be (1,width,height,channels)
 predictions = loaded_model.predict(image)
 print(predictions)
-
 

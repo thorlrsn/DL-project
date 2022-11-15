@@ -5,6 +5,7 @@ import tensorflow as tf
 import pathlib
 import requests
 import cv2
+import os
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -12,12 +13,12 @@ from tensorflow.keras.models import Sequential
 ### FLAGS ###
 create_random_data_flag = False
 show_sample_data_flag = False
-show_results_flag = False
-model_save_flag = False
+show_results_flag = True
+save_results_flag = False
 
-batch_size = 32
-img_height = 180
-img_width = 180
+batch_size = 2
+img_height = 255
+img_width = 255
 
 data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
 
@@ -107,13 +108,14 @@ loss = history.history['loss']
 val_loss = history.history['val_loss']
 
 ### Test model on sample image
-img=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data\Football goal\download (9).jpeg")
-image=cv2.resize(img, (180,180))
+print("Testing on VEO DATA ")
+img=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\sample_image_goal_from_ts.png")
+image=cv2.resize(img, (img_height,img_width))
 image=np.expand_dims(image, axis=0) #input shape needs to be (1,width,height,channels)
 predictions = model.predict(image)
-print(predictions)
 class_index = np.argmax(predictions)
-print(class_index)
+print("Model predictios :: ",predictions, " :: ",class_names[class_index])
+
 
 if show_results_flag is True:
     epochs_range = range(epochs)
@@ -129,14 +131,22 @@ if show_results_flag is True:
     plt.plot(epochs_range, val_loss, label='Validation Loss')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
+    if save_results_flag is True:
+        plt.savefig('results.png')
     plt.show()
 
 ### Saving model
-if model_save_flag is True:
-    # serialize model to JSON
-    model_json = model.to_json()
-    with open("model.json", "w") as json_file:
-        json_file.write(model_json)
-    # serialize weights to HDF5
-    model.save_weights("model.h5")
-    print("Saved model to disk")
+# serialize model to JSON
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+model.save_weights("model.h5")
+save = input("Want to save model? (y or n \n")
+if save == 'n':
+    os.remove("model.json")
+    os.remove("model.h5")
+elif save == 'y':
+    print("Model files saved")
+else:
+    print("invalid input")
