@@ -1,5 +1,5 @@
-# DP-project
-Repo for DP project
+# DL-project
+Repo for DL project
 
 ---
 ## Data
