@@ -10,15 +10,21 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
+# os.remove("outputs/model.h5")
+# os.remove("outputs/model.json")
+# os.remove("outputs/params.txt")
+# os.remove("outputs/results.png")
+
 ### FLAGS ###
 create_random_data_flag = False
 show_sample_data_flag = False
-show_results_flag = True
-save_results_flag = False
+show_results_flag = False
 
-batch_size = 2
-img_height = 255
-img_width = 255
+batch_size = 6
+img_height = 150
+img_width = 150
+optimizer = 'adam'
+epochs = 13
 
 data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
 
@@ -80,21 +86,19 @@ model = Sequential([
   layers.MaxPooling2D(),
   layers.Conv2D(32, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
+  layers.Conv2D(128, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
   layers.Flatten(),
-  layers.Dense(128, activation='relu'),
+  layers.Dense(64, activation='relu'),
   layers.Dense(num_classes)
   
 ])
-
-model.compile(optimizer='adam',
+model.compile(optimizer,
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-model.summary()
+xx = model.summary()
 
-epochs=10
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -116,37 +120,68 @@ predictions = model.predict(image)
 class_index = np.argmax(predictions)
 print("Model predictios :: ",predictions, " :: ",class_names[class_index])
 
+epochs_range = range(epochs)
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.title('Training and Validation Loss')
+plt.savefig('outputs/results.png')
 
 if show_results_flag is True:
-    epochs_range = range(epochs)
-    plt.figure(figsize=(8, 8))
-    plt.subplot(1, 2, 1)
-    plt.plot(epochs_range, acc, label='Training Accuracy')
-    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-    plt.legend(loc='lower right')
-    plt.title('Training and Validation Accuracy')
-
-    plt.subplot(1, 2, 2)
-    plt.plot(epochs_range, loss, label='Training Loss')
-    plt.plot(epochs_range, val_loss, label='Validation Loss')
-    plt.legend(loc='upper right')
-    plt.title('Training and Validation Loss')
-    if save_results_flag is True:
-        plt.savefig('results.png')
     plt.show()
+
+### Saving results
+save = input("Want to save results? (y or n) \n")
+if save == 'n':
+    os.remove("outputs/results.png")
+    print("Model results not saved")
+elif save == 'y':
+    print("Model results saved")
+else:
+    print("invalid input")    
 
 ### Saving model
 # serialize model to JSON
 model_json = model.to_json()
-with open("model.json", "w") as json_file:
+with open("outputs/model.json", "w") as json_file:
     json_file.write(model_json)
 # serialize weights to HDF5
-model.save_weights("model.h5")
-save = input("Want to save model? (y or n \n")
+model.save_weights("outputs/model.h5")
+save = input("Want to save model? (y or n) \n")
 if save == 'n':
-    os.remove("model.json")
-    os.remove("model.h5")
+    os.remove("outputs/model.json")
+    os.remove("outputs/model.h5")
 elif save == 'y':
     print("Model files saved")
 else:
     print("invalid input")
+
+with open("outputs/params.txt", "w") as f:
+    f.write('Model parameters!\n')
+    f.write("Batch size: ")
+    f.write(str(batch_size))
+    f.write("\n")
+    f.write("Image size: (height,width)")
+    f.write(str(img_height))
+    f.write(", ")
+    f.write(str(img_width))
+    f.write("\n")
+    f.write("Model summery: ")
+    model.summary(print_fn=lambda x: f.write(x + '\n'))
+    f.write("\n")
+    f.write("Number of epoch: ")
+    f.write(str(epochs))
+    f.write("\n")
+    f.write("Optimizer: ")
+    f.write(str(optimizer))
+    f.write("\n")
+
+  
