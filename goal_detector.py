@@ -20,11 +20,11 @@ create_random_data_flag = False
 show_sample_data_flag = False
 show_results_flag = False
 
-batch_size = 6
-img_height = 150
-img_width = 150
+batch_size = 16
+img_height = 100
+img_width = 100
 optimizer = 'adam'
-epochs = 13
+epochs = 15
 
 data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
 
