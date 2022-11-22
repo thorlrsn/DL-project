@@ -20,11 +20,11 @@ create_random_data_flag = False
 show_sample_data_flag = False
 show_results_flag = False
 
-batch_size = 16
+batch_size = 64
 img_height = 100
 img_width = 100
 optimizer = 'adam'
-epochs = 15
+epochs = 60
 
 data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
 
@@ -86,10 +86,10 @@ model = Sequential([
   layers.MaxPooling2D(),
   layers.Conv2D(32, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
-  layers.Conv2D(128, 3, padding='same', activation='relu'),
+  layers.Conv2D(64, 3, padding='same', activation='softmax'),
   layers.MaxPooling2D(),
   layers.Flatten(),
-  layers.Dense(64, activation='relu'),
+  layers.Dense(128, activation='sigmoid'),
   layers.Dense(num_classes)
   
 ])

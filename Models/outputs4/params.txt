@@ -1,0 +1,38 @@
+Model parameters!
+Batch size: 64
+Image size: (height,width)150, 150
+Model summery: Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ rescaling (Rescaling)       (None, 150, 150, 3)       0         
+                                                                 
+ conv2d (Conv2D)             (None, 150, 150, 16)      448       
+                                                                 
+ max_pooling2d (MaxPooling2D  (None, 75, 75, 16)       0         
+ )                                                               
+                                                                 
+ conv2d_1 (Conv2D)           (None, 75, 75, 32)        4640      
+                                                                 
+ max_pooling2d_1 (MaxPooling  (None, 37, 37, 32)       0         
+ 2D)                                                             
+                                                                 
+ conv2d_2 (Conv2D)           (None, 37, 37, 64)        18496     
+                                                                 
+ max_pooling2d_2 (MaxPooling  (None, 18, 18, 64)       0         
+ 2D)                                                             
+                                                                 
+ flatten (Flatten)           (None, 20736)             0         
+                                                                 
+ dense (Dense)               (None, 128)               2654336   
+                                                                 
+ dense_1 (Dense)             (None, 2)                 258       
+                                                                 
+=================================================================
+Total params: 2,678,178
+Trainable params: 2,678,178
+Non-trainable params: 0
+_________________________________________________________________
+
+Number of epoch: 60
+Optimizer: adam
