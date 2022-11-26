@@ -10,10 +10,14 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
-# os.remove("outputs/model.h5")
-# os.remove("outputs/model.json")
-# os.remove("outputs/params.txt")
-# os.remove("outputs/results.png")
+
+# path = "outputs/"
+path = "Models/outputs5/"
+
+# os.remove(f"{path}model.h5")
+# os.remove(f"{path}model.json")
+# os.remove(f"{path}params.txt")
+# os.remove(f"{path}results.png")
 
 ### FLAGS ###
 create_random_data_flag = False
@@ -21,12 +25,13 @@ show_sample_data_flag = False
 show_results_flag = False
 
 batch_size = 64
-img_height = 100
-img_width = 100
+img_height = 150
+img_width = 150
 optimizer = 'adam'
 epochs = 60
 
-data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
+# data_dir = r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\Data"
+data_dir = r"Data"
 
 if create_random_data_flag is True:
     ## Creating random data
@@ -113,7 +118,8 @@ val_loss = history.history['val_loss']
 
 ### Test model on sample image
 print("Testing on VEO DATA ")
-img=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\sample_image_goal_from_ts.png")
+# img=cv2.imread(r"C:\Users\thorl\OneDrive - Danmarks Tekniske Universitet\thor\3. Semester\Deep learning\project\DP-project\sample_image_goal_from_ts.png")
+img=cv2.imread(r"sample_image_goal_from_ts.png")
 image=cv2.resize(img, (img_height,img_width))
 image=np.expand_dims(image, axis=0) #input shape needs to be (1,width,height,channels)
 predictions = model.predict(image)
@@ -133,7 +139,7 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
-plt.savefig('outputs/results.png')
+plt.savefig(f'{path}results.png')
 
 if show_results_flag is True:
     plt.show()
@@ -141,7 +147,7 @@ if show_results_flag is True:
 ### Saving results
 save = input("Want to save results? (y or n) \n")
 if save == 'n':
-    os.remove("outputs/results.png")
+    os.remove(f"{path}results.png")
     print("Model results not saved")
 elif save == 'y':
     print("Model results saved")
@@ -151,20 +157,20 @@ else:
 ### Saving model
 # serialize model to JSON
 model_json = model.to_json()
-with open("outputs/model.json", "w") as json_file:
+with open(f"{path}model.json", "w") as json_file:
     json_file.write(model_json)
 # serialize weights to HDF5
-model.save_weights("outputs/model.h5")
+model.save_weights(f"{path}model.h5")
 save = input("Want to save model? (y or n) \n")
 if save == 'n':
-    os.remove("outputs/model.json")
-    os.remove("outputs/model.h5")
+    os.remove(f"{path}model.json")
+    os.remove(f"{path}model.h5")
 elif save == 'y':
     print("Model files saved")
 else:
     print("invalid input")
 
-with open("outputs/params.txt", "w") as f:
+with open(f"{path}params.txt", "w") as f:
     f.write('Model parameters!\n')
     f.write("Batch size: ")
     f.write(str(batch_size))
