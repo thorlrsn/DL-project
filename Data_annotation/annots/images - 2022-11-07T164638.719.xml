@@ -1,0 +1,26 @@
+<annotation>
+	<folder>Football goal</folder>
+	<filename>images - 2022-11-07T164638.719.jpeg</filename>
+	<path>C:\Users\villi\Documents\DTU\Fall 2022\Deep Learning\0-DP-project-git\Data\Football goal\images - 2022-11-07T164638.719.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>225</width>
+		<height>225</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>goal</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>7</xmin>
+			<ymin>75</ymin>
+			<xmax>186</xmax>
+			<ymax>169</ymax>
+		</bndbox>
+	</object>
+</annotation>
