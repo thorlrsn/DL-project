@@ -24,7 +24,7 @@
 
 ## Object Detection
 
-The model trained and used for object detection was too large to upload to github, but the results can be seen in the .ipynb script in the *Object detection* folder. This part was also not used in the final result.
+The model trained and used for object detection was too large to upload to github, but the results can be seen in the .ipynb script in the *Object detection* folder. This part was not used in the final result.
 
 ## Group members:
 
