@@ -8,23 +8,30 @@
 
 ## General Information
 
-- The final results are contained in a jupyter notebook in the Final version folder (final_script.ipynb) 
-- All the other folders contains the different independent parts developed during this project, the ones used for the final version as well as the ones who had potential to be used.
+- The final result is contained in a jupyter notebook in the Final version folder (final_script.ipynb) 
+- All the other folders contain different independent parts developed during this project, the ones used for the final version as well as the ones who had potential to be used.
 - General structure:
     - Goal detection
     - Player detection
     - Perspective transform
     - Bird-eye-view
 
+
+
 ## Data
-Football goal contains the images used to train the model to detect a football goal. 
+- The *Football goal* subfolder inside *Data* contains images used to detect a football goal
+- The *Not Football goal* subfolder inside *Data* contains images used to not detect a football goal
+
+## Object Detection
+
+The model trained and used for object detection was too large to upload to github, but the results can be seen in the .ipynb script in the *Object detection* folder. This part was also not used in the final result.
 
 ## Group members:
 
 - Samuel Poltock (s212973)
 - Thor Larsen (s171198)
-- Paweł Zieliński (213231)
-- Vilhjálmur Kári Jensson (212942)
+- Paweł Zieliński (s213231)
+- Vilhjálmur Kári Jensson (s212942)
 - José Turégano Pérez (s212751)
 
 
